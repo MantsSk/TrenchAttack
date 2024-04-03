@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public bool invertX = false;
     public bool invertY = false;
 
+    public float gravityModifier = 1.0f;
+
     public float mouseSenisitivity = 2.0f;
 
     void Start()
@@ -28,6 +30,8 @@ public class PlayerController : MonoBehaviour
         moveInput = vertMove + horiMove;
 
         moveInput = moveInput.normalized * moveSpeed;
+
+        // moveInput.y = Physics.gravity.y * gravityModifier * Time.deltaTime;
 
         characterController.Move(moveInput * Time.deltaTime);
 
