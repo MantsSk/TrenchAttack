@@ -17,5 +17,17 @@ public class BulletController : MonoBehaviour
     void Update()
     {
         rb.velocity = transform.forward * moveSpeed;
+
+        Destroy(gameObject, 2f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+            Destroy(gameObject);
+        }
+
+
     }
 }

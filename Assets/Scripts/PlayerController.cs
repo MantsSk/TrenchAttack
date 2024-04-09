@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 12.0f;
     public float mouseSensitivity = 2.0f;
 
+    public Transform firePoint;
+    public GameObject bulletPrefab;
+
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
         HandleJump();
         HandleRunning();
         HandleMouseLook();
+        HandleShooting();
     }
 
     private void HandleMovement()
@@ -40,6 +44,23 @@ public class PlayerController : MonoBehaviour
         moveInput.y += Physics.gravity.y * gravityModifier * Time.deltaTime;
 
         characterController.Move(moveInput * Time.deltaTime);
+    }
+
+    private void HandleShooting() 
+    {
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        // }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, 50f))
+            {
+                Debug.Log(hit.transform.name);
+            }
+        }
     }
 
     private void HandleJump()
