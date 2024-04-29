@@ -17,6 +17,12 @@ public class PlayerController : MonoBehaviour
     public Transform firePoint;
     public GameObject bulletPrefab;
 
+    public static PlayerController instance;
+
+    private void Awake() {
+        instance = this;
+    }
+
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -58,7 +64,10 @@ public class PlayerController : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, 50f))
             {
-                Debug.Log(hit.transform.name);
+                if(hit.transform.tag == "Enemy")
+                {
+                    hit.transform.GetComponent<Enemy>().DamageEnemy();
+                }
             }
         }
     }
