@@ -25,9 +25,7 @@ public class BulletController : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Destroy(gameObject);
+            other.GetComponent<Enemy>().DamageEnemy();
         }
-
-
     }
 }
