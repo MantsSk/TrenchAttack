@@ -28,10 +28,13 @@ public class Enemy : MonoBehaviour
 
     public void DamageEnemy() {
         currentHealth -= 20;
+        animator.SetTrigger("isHurt");
         Debug.Log("Current Health: " + currentHealth);
         
         if (currentHealth <= 0) {
-            Destroy(gameObject);
+            animator.SetTrigger("isDead");
+            agent.isStopped = true;
+            // Destroy(gameObject);
         }
     }
 
