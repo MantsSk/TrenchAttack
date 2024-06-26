@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "WW1Trenches.sln"
+    "dotnet.defaultSolution": "TrenchAttack.sln"
 }

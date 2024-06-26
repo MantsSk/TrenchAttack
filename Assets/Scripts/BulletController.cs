@@ -20,12 +20,4 @@ public class BulletController : MonoBehaviour
 
         Destroy(gameObject, 2f);
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-            other.GetComponent<Enemy>().DamageEnemy();
-        }
-    }
 }

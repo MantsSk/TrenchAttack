@@ -26,21 +26,20 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    public void DamageEnemy() {
-        currentHealth -= 20;
+    public void DamageEnemy(int damage) {
+        currentHealth -= damage;
         animator.SetTrigger("isHurt");
         Debug.Log("Current Health: " + currentHealth);
         
         if (currentHealth <= 0) {
             animator.SetTrigger("isDead");
-            agent.isStopped = true;
+            agent.isStopped = true;            
             // Destroy(gameObject);
         }
     }
 
     void Chase() 
     {
-        animator.SetBool("isShooting", false);
         agent.SetDestination(targetPoint);
 
         if (Vector3.Distance(transform.position, targetPoint) > distanceToChase) {
@@ -80,10 +79,12 @@ public class Enemy : MonoBehaviour
         {
             // Stop chasing and start shooting
             agent.isStopped = true;
+            
             Shoot();
 
             // Check if the player is out of shooting range
             if (Vector3.Distance(transform.position, targetPoint) > distanceToShoot) {
+                animator.SetBool("isShooting", false);
                 isShooting = false;
                 agent.isStopped = false; // Resume chasing
             }
