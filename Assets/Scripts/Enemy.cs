@@ -16,6 +16,10 @@ public class Enemy : MonoBehaviour
 
     public float distanceToChase = 20; // Changed to 20 meters to detect player
     public float distanceToShoot = 5; // New variable for shooting range
+    public int damage = 10; // Damage dealt to the player
+    public float shootInterval = 1.5f; // Interval between shots
+    public float accuracy = 0.75f; // Accuracy of the enemy (1.0 = 100% accurate, 0.0 = 0% accurate)
+    private float lastShootTime;
 
     void Start()
     {
@@ -52,9 +56,39 @@ public class Enemy : MonoBehaviour
 
     void Shoot() 
     {
-        // Implement shooting logic here
         animator.SetBool("isShooting", true);
-        Debug.Log("Shooting at player!");
+        if (Time.time >= lastShootTime + shootInterval)
+        {
+            lastShootTime = Time.time;
+            if (Random.value <= accuracy)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.forward, out hit, distanceToShoot))
+                {
+                    if (hit.transform.CompareTag("Player"))
+                    {
+                        PlayerHealth playerHealth = PlayerController.instance.GetComponent<PlayerHealth>();
+                        if (playerHealth != null)
+                        {
+                            playerHealth.TakeDamage(damage);
+                            Debug.Log("Enemy hit the player!");
+                        }
+                        else
+                        {
+                            Debug.Log("PlayerHealth component not found!");
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Enemy missed the player!");
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Enemy missed due to accuracy!");
+            }
+        }
     }
 
     void Update()

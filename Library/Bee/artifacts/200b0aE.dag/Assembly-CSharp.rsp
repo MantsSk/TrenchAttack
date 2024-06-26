@@ -374,6 +374,7 @@
 "Assets/JMO Assets/WarFX/Scripts/WFX_BulletHoleDecal.cs"
 "Assets/JMO Assets/WarFX/Scripts/WFX_LightFlicker.cs"
 "Assets/JMO Assets/WarFX/Spawn System/CFX_SpawnSystem.cs"
+"Assets/PlayerHealth.cs"
 "Assets/Scripts/BulletController.cs"
 "Assets/Scripts/CameraController.cs"
 "Assets/Scripts/Enemy.cs"

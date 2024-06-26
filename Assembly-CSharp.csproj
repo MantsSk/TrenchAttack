@@ -80,6 +80,7 @@
     <Compile Include="Assets/JMO Assets/WarFX/Demo/Assets/WFX_Demo_Wall.cs" />
     <Compile Include="Assets/JMO Assets/WarFX/Scripts/WFX_BulletHoleDecal.cs" />
     <Compile Include="Assets/JMO Assets/WarFX/Demo/Assets/CFX_Demo_RandomDir.cs" />
+    <Compile Include="Assets/PlayerHealth.cs" />
     <Compile Include="Assets/Scripts/PlayerController.cs" />
     <Compile Include="Assets/JMO Assets/WarFX/Spawn System/CFX_SpawnSystem.cs" />
     <Compile Include="Assets/Scripts/CameraController.cs" />
