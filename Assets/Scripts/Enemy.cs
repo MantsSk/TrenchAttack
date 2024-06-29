@@ -20,6 +20,8 @@ public class Enemy : MonoBehaviour
     public float shootInterval = 1.5f; // Interval between shots
     public float accuracy = 0.75f; // Accuracy of the enemy (1.0 = 100% accurate, 0.0 = 0% accurate)
     private float lastShootTime;
+    public GameObject weapon; // Reference to the weapon
+    public Transform firePoint; // The point from which the enemy shoots
 
     void Start()
     {
@@ -54,42 +56,60 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Shoot() 
+void Shoot()
+{
+    animator.SetBool("isShooting", true);
+    if (Time.time >= lastShootTime + shootInterval)
     {
-        animator.SetBool("isShooting", true);
-        if (Time.time >= lastShootTime + shootInterval)
+        lastShootTime = Time.time;
+
+        // Get the weapon's fire point and direction
+        Vector3 direction = (PlayerController.instance.transform.position - firePoint.position).normalized;
+
+        Debug.DrawRay(firePoint.position, direction * distanceToShoot, Color.red, 1.0f); // Draw the ray for 1 second
+
+        // Debug.Log("Enemy shooting! Direction: " + direction);
+
+        if (Random.value <= accuracy)
         {
-            lastShootTime = Time.time;
-            if (Random.value <= accuracy)
+            RaycastHit hit;
+            if (Physics.Raycast(firePoint.position, direction, out hit, distanceToShoot))
             {
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.forward, out hit, distanceToShoot))
+                Debug.Log("Raycast hit something!");
+
+                if (hit.transform.CompareTag("Player"))
                 {
-                    if (hit.transform.CompareTag("Player"))
+                    Debug.Log("Raycast hit the player!");
+
+                    PlayerHealth playerHealth = PlayerController.instance.GetComponent<PlayerHealth>();
+                    if (playerHealth != null)
                     {
-                        PlayerHealth playerHealth = PlayerController.instance.GetComponent<PlayerHealth>();
-                        if (playerHealth != null)
-                        {
-                            playerHealth.TakeDamage(damage);
-                            Debug.Log("Enemy hit the player!");
-                        }
-                        else
-                        {
-                            Debug.Log("PlayerHealth component not found!");
-                        }
+                        playerHealth.TakeDamage(damage);
+                        Debug.Log("Enemy hit the player!");
                     }
                     else
                     {
-                        Debug.Log("Enemy missed the player!");
+                        Debug.Log("PlayerHealth component not found!");
                     }
+                }
+                else
+                {
+                    Debug.Log("Raycast hit something other than the player: " + hit.transform.name);
                 }
             }
             else
             {
-                Debug.Log("Enemy missed due to accuracy!");
+                Debug.Log("Raycast did not hit anything.");
             }
         }
+        else
+        {
+            Debug.Log("Enemy missed due to accuracy!");
+        }
     }
+}
+
+
 
     void Update()
     {

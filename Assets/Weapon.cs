@@ -25,6 +25,8 @@ public class Weapon : MonoBehaviour
     public float adsSpeed = 5f; // Speed of transition to ADS
     private bool isAiming = false;
     public ParticleSystem muzzleFlash;
+    public AudioClip shootingSound; // Add this line
+    private AudioSource audioSource; // Add this line
 
 
     // Start is called before the first frame update
@@ -36,6 +38,8 @@ public class Weapon : MonoBehaviour
         mainCamera = Camera.main;
         originalFOV = mainCamera.fieldOfView;
         originalPosition = transform.localPosition;
+
+        audioSource = GetComponent<AudioSource>(); // Initialize AudioSource
     }
 
     // Update is called once per frame
@@ -81,6 +85,7 @@ public class Weapon : MonoBehaviour
             }
         }
         PlayMuzzleFlash();
+        PlayShootingSound(); // Play the shooting sound
     }
 
     private void PlayMuzzleFlash()
@@ -88,6 +93,14 @@ public class Weapon : MonoBehaviour
         if (muzzleFlash != null)
         {
             muzzleFlash.Play();
+        }
+    }
+
+    private void PlayShootingSound()
+    {
+        if (shootingSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(shootingSound);
         }
     }
 

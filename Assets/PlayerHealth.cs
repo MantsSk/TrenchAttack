@@ -58,8 +58,7 @@ public class PlayerHealth : MonoBehaviour
     // Method to handle player death
     private void Die()
     {
-        // Add logic for player death, e.g., play animation, restart level, etc.
-        Debug.Log("Player has died!");
+        GameManager.instance.PlayerDied(); // Call PlayerDied method in GameManager
     }
 
     // Coroutine to handle invincibility period after taking damage
